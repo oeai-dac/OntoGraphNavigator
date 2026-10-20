@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.vite/
+*.local
+.DS_Store
+
+# Reference data of the checks: research data, kept on this machine only.
+# The checks that read it skip themselves where it is missing.
+_session/
+
+# The BDA recording protocols (forms and packages): not distributed with the
+# Navigator. The checks that read them skip themselves where they are missing.
+protocols/

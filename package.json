@@ -1,0 +1,37 @@
+{
+  "name": "ontographnavigator",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Browser-based data entry for knowledge graphs modelled with OntoCartographer Studio",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node tests/run-views-check.mjs && node --max-old-space-size=8192 tests/run-materialize-check.mjs && node --max-old-space-size=8192 tests/run-rdf-check.mjs && node --max-old-space-size=8192 tests/run-import-check.mjs && node --max-old-space-size=8192 tests/run-thesaurus-check.mjs && node --max-old-space-size=8192 tests/run-uri-template-check.mjs && node --max-old-space-size=8192 tests/run-forms-check.mjs && node --max-old-space-size=8192 tests/run-edit-check.mjs && node --max-old-space-size=8192 tests/run-scaffold-check.mjs && node --max-old-space-size=8192 tests/run-store-check.mjs && node tests/run-keys-check.mjs && node --max-old-space-size=8192 tests/run-languages-check.mjs && node tests/run-example-check.mjs && node --max-old-space-size=8192 tests/run-view-editor-check.mjs && node --max-old-space-size=8192 tests/run-matrix-editor-check.mjs && node --max-old-space-size=8192 tests/run-phase-editor-check.mjs && node --max-old-space-size=8192 tests/run-object-editor-check.mjs && node --max-old-space-size=8192 tests/run-hme-import-check.mjs && node --max-old-space-size=8192 tests/run-protocols-check.mjs && node --max-old-space-size=8192 tests/run-protocol-pdf-check.mjs && node --max-old-space-size=8192 tests/run-graphml-check.mjs && node --max-old-space-size=8192 tests/run-geometry-write-check.mjs && node --max-old-space-size=8192 tests/run-bridge-write-check.mjs && node --max-old-space-size=8192 tests/run-project-zip-check.mjs && node --max-old-space-size=8192 tests/run-unit-types-check.mjs && node --max-old-space-size=8192 tests/run-incremental-check.mjs --bench=0",
+    "check:online": "node --max-old-space-size=8192 tests/run-thesaurus-check.mjs --online",
+    "bench": "node --expose-gc --max-old-space-size=8192 tests/run-scale-bench.mjs && node --max-old-space-size=8192 tests/run-incremental-check.mjs --ops=200 --bench=30",
+    "pdf-fields": "node scripts/pdf-fields.mjs",
+    "protocols": "node scripts/zip-protocols.mjs",
+    "sync-views": "node scripts/sync-views.mjs"
+  },
+  "dependencies": {
+    "dagre": "^0.8.5",
+    "fflate": "^0.8.2",
+    "leaflet": "^1.9.4",
+    "n3": "^2.1.2",
+    "pdf-lib": "^1.17.1",
+    "proj4": "^2.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
+    "reactflow": "^11.11.4",
+    "three": "^0.169.0",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}

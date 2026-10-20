@@ -1,0 +1,54 @@
+// Central registry of the content views the app can show. Both the classic
+// tab bar and the Dashboard's per-pane view picker read from here, so a view
+// -- and the data it needs before it may be offered at all -- is declared in
+// exactly one place.
+
+import { hasDotOneData } from './harrisMatrix'
+import { hasGeoData } from './geo'
+import { hasTemporalData } from './temporal'
+
+// `tabLabel` is what the classic tab bar shows (unchanged wording), `label`
+// the shorter name used in the Dashboard's pane dropdown, where horizontal
+// space is scarce.
+export const VIEWS = [
+  { key: 'overview', icon: '◈', tabLabel: 'Overview', label: 'Overview' },
+  { key: 'explore', icon: '⬤', tabLabel: 'Explorer', label: 'Explorer' },
+  { key: 'graph', icon: '⁂', tabLabel: 'Graph', label: 'Graph' },
+  { key: 'matrix', icon: '⬍', tabLabel: 'Matrix', label: 'Harris Matrix' },
+  { key: 'map', icon: '⚑', tabLabel: 'Map', label: 'Map' },
+  { key: 'scene3d', icon: '⬢', tabLabel: '3D', label: '3D' },
+  { key: 'timeline', icon: '⧗', tabLabel: 'Timeline', label: 'Timeline' },
+  { key: 'charts', icon: '▤', tabLabel: 'Charts', label: 'Charts' },
+]
+
+export const VIEW_KEYS = VIEWS.map((v) => v.key)
+
+// Views that only make sense for graphs carrying the right kind of data.
+// Everything not listed here is always available -- 3D included: its main
+// source is an OBJ loaded in the tab itself, which the graph can't announce.
+const REQUIRES = {
+  matrix: hasDotOneData,
+  map: hasGeoData,
+  timeline: hasTemporalData,
+}
+
+// `also`: views an application offers although the graph does not show their
+// data yet -- the matrix of an editor's mapping before its first unit.
+export function isViewAvailable(graph, key, also = []) {
+  if (!VIEW_KEYS.includes(key)) return false
+  if (also.includes(key)) return true
+  const req = REQUIRES[key]
+  return req ? req(graph) : true
+}
+
+export function availableViews(graph, also = []) {
+  return VIEWS.filter((v) => isViewAvailable(graph, v.key, also))
+}
+
+export function availableViewKeys(graph, also = []) {
+  return availableViews(graph, also).map((v) => v.key)
+}
+
+export function viewLabel(key) {
+  return VIEWS.find((v) => v.key === key)?.label || key
+}
